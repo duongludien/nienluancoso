@@ -2,6 +2,14 @@
 
 \begin{document}
 
-Nội dung chương 02
+Chương này sẽ mô tả cách sử dụng Cloud Translation API để dịch văn bản. Phương thức dịch văn bản đơn giản:
+\begin{lstlisting}[language=Java]
+public static void translateText(String sourceText, PrintStream out) {
+	Translate translate = createTranslateService();
+	Translation translation = translate.translate(sourceText);
+	out.printf("Source Text:\n\t%s\n", sourceText);
+	out.printf("Translated Text:\n\t%s\n", translation.getTranslatedText());
+}
+\end{lstlisting}
 
 \end{document}
