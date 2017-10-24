@@ -11,30 +11,46 @@ Ta sử dụng tài khoản Google để truy cập đến các dịch vụ củ
 \begin{lstlisting}[numbers=none, frame=none,xleftmargin=0cm]
 https://console.cloud.google.com/freetrial
 \end{lstlisting}
-và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả thông tin thẻ tín dụng.
+và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả thông tin thẻ tín dụng (Hình \ref{Dien day du thong tin ma Google yeu cau} và \ref{Thong bao cua Google khi dang ky thanh cong}).
+
+\begin{figure}
+	\includegraphics[width=\textwidth, keepaspectratio]{trial-2.png}
+	\caption{Điền đầy đủ thông tin mà Google yêu cầu}
+	\label{Dien day du thong tin ma Google yeu cau}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\textwidth, keepaspectratio]{trial-4.png}
+	\caption{Thông báo của Google khi đăng ký thành công}
+	\label{Thong bao cua Google khi dang ky thanh cong}
+\end{figure}
 
 \section{Tạo một project trên Google API Console}
 \begin{enumerate}
 	\item Truy cập vào Google Cloud Platform Console.
-	\item Tạo một project tên là ``translation'' (Hình \ref{Tạo một project trên Google Cloud Platform}).
+	\item Tạo một project tên là ``translation'' (Hình \ref{Tao mot project tren Google Cloud Platform}).
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{create-project.png}
 		\caption{Tạo một project trên Google Cloud Platform}
-		\label{Tạo một project trên Google Cloud Platform}
+		\label{Tao mot project tren Google Cloud Platform}
 	\end{figure}
 \end{enumerate}
 
 \section{Kích hoạt Google Cloud Translation API}
 \begin{enumerate}
 	\item Từ thanh tìm kiếm, nhập từ khoá ``Google Cloud Translation API''.
-	\item Nhấp vào nút Enable để kích hoạt dịch vụ Translation.
-	% TODO: Chèn hình vào đây và ref lên trên
+	\item Nhấp vào nút Enable để kích hoạt dịch vụ Translation (Hình \ref{Kich hoat dich vu Translation}).
+	\begin{figure}
+		\includegraphics[width=\textwidth, keepaspectratio]{enable.png}
+		\caption{Kích hoạt dịch vụ Translation}
+		\label{Kich hoat dich vu Translation}
+	\end{figure}
 \end{enumerate}
 
 \section{Lấy API Key}
 \begin{enumerate}
 	\item Từ Google Cloud Platform Console menu, vào APIs and services > Credentials.
-	\item Tạo một API key.
+	\item Tạo một API key và tiến hành hạn chế quyền truy cập đến API key này.
 	% TODO: Chèn hình vào đây và ref lên trên
 \end{enumerate}
 
@@ -43,29 +59,32 @@ và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả t
 \section{Tạo một project trên Eclipse}
 \begin{enumerate}
 	\item Cài đặt gói M2Eclipse.
-
-	\item Vào File > New > Other\ldots > Maven > Maven Project. (Hình \ref{Tạo một project Maven trên Eclipse} và \ref{Thiết lập Archetype Parameters})
+	\item Vào File > New > Other\ldots > Maven > Maven Project. (Hình \ref{Tao mot project Maven tren Eclipse} và \ref{Thiet lap Archetype Parameters})
+	
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{create-maven-project-1.png}
 		\caption{Tạo một project Maven trên Eclipse}
-		\label{Tạo một project Maven trên Eclipse}
+		\label{Tao mot project Maven tren Eclipse}
 	\end{figure}
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{create-maven-project-2.png}
 		\caption{Thiết lập Archetype Parameters}
-		\label{Thiết lập Archetype Parameters}
+		\label{Thiet lap Archetype Parameters}
 	\end{figure}
 	
-	\item Mở file cấu hình Maven pom.xml vào thêm vào mục Dependencies\footnote{https://developers.google.com/api-client-library/java/apis/translate/v2} (Hình \ref{Thêm Dependencies}).
+	\item Mở file cấu hình Maven pom.xml vào thêm vào mục Dependencies\footnote{https://developers.google.com/api-client-library/java/apis/translate/v2} (Hình \ref{Them Dependencies}).
+	
 	\begin{itemize}
 		\item Group Id: com.google.apis
 		\item Artifact Id: google-api-services-translate
 		\item Version: v2-rev51-1.23.0
 	\end{itemize}
+	
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{create-maven-project-3.png}
 		\caption{Thêm Dependencies}
-		\label{Thêm Dependencies}
+		\label{Them Dependencies}
 	\end{figure}
+	
 \end{enumerate}
 \end{document}
