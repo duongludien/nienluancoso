@@ -18,13 +18,15 @@ public class TranslateText {
 	 * @param sourceLang source language of source text
 	 * @param targetLang target language for translating
 	 * 
-	 * @return translated text
+	 * @return translated text if success
+	 * @return null if error
 	 * 
 	 * @author Lu-Dien DUONG
 	 * @since 25/10/2017
 	 * 
 	 * */
 	public static String translateText(String sourceText, String sourceLang, String targetLang) {
+		// Split sourceText by line
 		ArrayList<String> q = Utilities.splitByLine(sourceText);
 		
 		// Translate service
@@ -32,6 +34,7 @@ public class TranslateText {
 		Translations translations = translateService.translations();
 		
 		try {
+			// Translate request
 			Translate.Translations.List request  = translations.list(q, targetLang);
 			
 			// Detect language or no
@@ -45,13 +48,16 @@ public class TranslateText {
 			// Build result
 			StringBuilder builder = new StringBuilder("");
 			HashMap<String, String> languages = SupportedLanguages.getSupportedLanguagesMap();
-			String newLangDetector = "";		// For detecting multiple languages
+			String previousLangDetector = "";		// For detecting multiple languages
+			
+			// Show each line of result
 			for(TranslationsResource item : result) {
+				
 				// If source language is not defined, get detected source language
 				if(sourceLang == null) {
 					String detectedLang = item.getDetectedSourceLanguage();
-					if(!detectedLang.equals(newLangDetector)) {
-						newLangDetector = detectedLang;
+					if(!detectedLang.equals(previousLangDetector)) {
+						previousLangDetector = detectedLang;
 						builder.append("Detected language: " + languages.get(detectedLang) + "\n");
 					}
 				}

@@ -1,6 +1,5 @@
 package com.duongludien.www.translation;
 
-
 public class LanguageItem {
 	private String code;
 	private String name;
