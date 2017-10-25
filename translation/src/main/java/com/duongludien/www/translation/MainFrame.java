@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -14,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,8 +25,9 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JTextArea textAreaSource, textAreaDest;
-	private JComboBox<String> comboBoxSourceLang, comboBoxDestLang;
-	private JButton buttonTranslate, buttonExit;
+	JComboBox<LanguageItem> comboBoxSourceLang;
+	private JComboBox<LanguageItem> comboBoxTargetLang;
+	private JButton buttonDetect, buttonTranslate, buttonExit;
 
 	public MainFrame(String title) {
 		super(title);
@@ -41,15 +44,31 @@ public class MainFrame extends JFrame {
 		
 		buttonTranslate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Get source text
+				// Get source text, source language and target language
 				String sourceText = textAreaSource.getText();
+				LanguageItem sourceLang = (LanguageItem) comboBoxSourceLang.getSelectedItem();
+				LanguageItem targetLang = (LanguageItem) comboBoxTargetLang.getSelectedItem();
+				String sourceLangCode = sourceLang.getCode();
+				String targetLangCode = targetLang.getCode();
+				
+				// If source language is not set, sourceLangCode is null
+				if(sourceLangCode.equals("detect"))
+					sourceLangCode = null;
 				
 				// Translate
-				String result = TranslateText.translateText(sourceText, "en", "vi");
+				String result = TranslateText.translateText(sourceText, sourceLangCode, targetLangCode);
 				
 				// Show translated text
-				// TODO Detected language
 				textAreaDest.setText(result);
+			}
+		});
+		
+		buttonDetect.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				String sourceText = textAreaSource.getText();
+				String message = DetectLanguages.detectLanguages(sourceText);
+				JOptionPane.showMessageDialog(null, message);
 			}
 		});
 	}
@@ -81,15 +100,24 @@ public class MainFrame extends JFrame {
 		
 		JPanel panelButton = new JPanel(new FlowLayout());
 		
+		ArrayList<LanguageItem> languages = SupportedLanguages.getSupportedLanguages();
+		
 		JLabel labelSource = new JLabel("Source Language:");
-		panelSourceLanguage.add(labelSource);		
-		comboBoxSourceLang = new JComboBox<String>();
+		panelSourceLanguage.add(labelSource);
+		comboBoxSourceLang = new JComboBox<LanguageItem>();
+		comboBoxSourceLang.addItem(new LanguageItem("detect", "Detect"));
+		for(LanguageItem item : languages) {
+			comboBoxSourceLang.addItem(item);
+		}
 		panelSourceLanguage.add(comboBoxSourceLang);
 		
 		JLabel labelDest = new JLabel("Destination Language:");
 		panelDestLanguage.add(labelDest);
-		comboBoxDestLang = new JComboBox<String>();
-		panelDestLanguage.add(comboBoxDestLang);
+		comboBoxTargetLang = new JComboBox<LanguageItem>();
+		for(LanguageItem item : languages) {
+			comboBoxTargetLang.addItem(item);
+		}
+		panelDestLanguage.add(comboBoxTargetLang);
 		
 		textAreaSource = new JTextArea();
 		textAreaSource.setLineWrap(true);
@@ -106,8 +134,10 @@ public class MainFrame extends JFrame {
 		JScrollPane scrollPaneDestText = new JScrollPane(textAreaDest);
 		panelDestText.add(scrollPaneDestText, BorderLayout.CENTER);
 		
+		buttonDetect = new JButton("Detect Languages");
 		buttonTranslate = new JButton("Translate");
 		buttonExit = new JButton("Exit");
+		panelButton.add(buttonDetect);
 		panelButton.add(buttonTranslate);
 		panelButton.add(buttonExit);
 		

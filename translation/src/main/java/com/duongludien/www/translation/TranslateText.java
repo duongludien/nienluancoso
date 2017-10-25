@@ -1,53 +1,15 @@
 package com.duongludien.www.translation;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.googleapis.util.Utils;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
 import com.google.api.services.translate.Translate;
-import com.google.api.services.translate.TranslateRequestInitializer;
 import com.google.api.services.translate.Translate.Translations;
 import com.google.api.services.translate.model.TranslationsListResponse;
 import com.google.api.services.translate.model.TranslationsResource;
 
 public class TranslateText {
-	
-	/*
-	 * Create translate service
-	 * 
-	 * @param None
-	 * 
-	 * @return Translate service
-	 * 
-	 * @author Lu-Dien DUONG
-	 * @since 25/10/2017
-	 * 
-	 * */
-	public static Translate createTranslateService() {
-		try {
-			HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-			JsonFactory jsonFactory = Utils.getDefaultJsonFactory();
-			TranslateRequestInitializer translateRequestInitializer = new TranslateRequestInitializer("AIzaSyA8gG0zwQ00opVgu6bKx5iaLcTt3zDCUmw");
-			
-			Translate.Builder builder = new Translate.Builder(httpTransport, jsonFactory, null);
-			builder.setApplicationName("Translator");			
-			builder.setTranslateRequestInitializer(translateRequestInitializer);
-			
-			Translate translateService = builder.build();
-			
-			return translateService;
-		} catch (GeneralSecurityException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
 	
 	/*
 	 * Translate text
@@ -63,15 +25,10 @@ public class TranslateText {
 	 * 
 	 * */
 	public static String translateText(String sourceText, String sourceLang, String targetLang) {
-		// Split by line and add all lines to ArrayList
-		String strList[] = sourceText.split("\n");
-		ArrayList<String> q = new ArrayList<String>();
-		for(String item : strList) {
-			q.add(item);
-		}
+		ArrayList<String> q = Utilities.splitByLine(sourceText);
 		
 		// Translate service
-		Translate translateService = createTranslateService();
+		Translate translateService = Utilities.createTranslateService();
 		Translations translations = translateService.translations();
 		
 		try {
@@ -87,6 +44,7 @@ public class TranslateText {
 			
 			// Build result
 			StringBuilder builder = new StringBuilder("");
+			HashMap<String, String> languages = SupportedLanguages.getSupportedLanguagesMap();
 			String newLangDetector = "";		// For detecting multiple languages
 			for(TranslationsResource item : result) {
 				// If source language is not defined, get detected source language
@@ -94,7 +52,7 @@ public class TranslateText {
 					String detectedLang = item.getDetectedSourceLanguage();
 					if(!detectedLang.equals(newLangDetector)) {
 						newLangDetector = detectedLang;
-						builder.append("Detected language: " + detectedLang + "\n");
+						builder.append("Detected language: " + languages.get(detectedLang) + "\n");
 					}
 				}
 				
