@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -18,8 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import com.google.api.services.translate.model.TranslationsResource;
 
 public class MainFrame extends JFrame {
 	
@@ -47,29 +44,16 @@ public class MainFrame extends JFrame {
 				// Get source text
 				String sourceText = textAreaSource.getText();
 				
-				// Split by line
-				String strList[] = sourceText.split("\n");
-				ArrayList<String> q = new ArrayList<String>();
-				for(String item : strList) {
-					q.add(item);
-				}
-				
 				// Translate
-				ArrayList<TranslationsResource> result = TranslateText.translateText(q, "en", "vi");
+				String result = TranslateText.translateText(sourceText, "en", "vi");
 				
 				// Show translated text
-				// TODO Detect language
-				textAreaDest.setText("");
-				for(TranslationsResource item : result) {
-					textAreaDest.append(item.getTranslatedText() + "\n");
-				}
+				// TODO Detected language
+				textAreaDest.setText(result);
 			}
 		});
 	}
 	
-	
-
-
 	private void addControls() {
 		Container container = getContentPane();
 		
