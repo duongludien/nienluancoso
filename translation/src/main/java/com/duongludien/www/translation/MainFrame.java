@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JTextArea textAreaSource, textAreaDest;
+	private JTextArea textAreaSource, textAreaTarget;
 	JComboBox<LanguageItem> comboBoxSourceLang;
 	private JComboBox<LanguageItem> comboBoxTargetLang;
 	private JButton buttonDetect, buttonTranslate, buttonExit;
@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
 				String result = TranslateText.translateText(sourceText, sourceLangCode, targetLangCode);
 				
 				// Show translated text
-				textAreaDest.setText(result);
+				textAreaTarget.setText(result);
 			}
 		});
 		
@@ -111,7 +111,7 @@ public class MainFrame extends JFrame {
 		}
 		panelSourceLanguage.add(comboBoxSourceLang);
 		
-		JLabel labelDest = new JLabel("Destination Language:");
+		JLabel labelDest = new JLabel("Target Language:");
 		panelDestLanguage.add(labelDest);
 		comboBoxTargetLang = new JComboBox<LanguageItem>();
 		for(LanguageItem item : languages) {
@@ -126,12 +126,12 @@ public class MainFrame extends JFrame {
 		JScrollPane scrollPaneSourceText = new JScrollPane(textAreaSource);
 		panelSourceText.add(scrollPaneSourceText, BorderLayout.CENTER);
 		
-		textAreaDest = new JTextArea();
-		textAreaDest.setEditable(false);
-		textAreaDest.setLineWrap(true);
-		textAreaDest.setWrapStyleWord(true);
-		textAreaDest.setFont(new Font("sans-serif", Font.PLAIN, 14));
-		JScrollPane scrollPaneDestText = new JScrollPane(textAreaDest);
+		textAreaTarget = new JTextArea();
+		textAreaTarget.setEditable(false);
+		textAreaTarget.setLineWrap(true);
+		textAreaTarget.setWrapStyleWord(true);
+		textAreaTarget.setFont(new Font("sans-serif", Font.PLAIN, 14));
+		JScrollPane scrollPaneDestText = new JScrollPane(textAreaTarget);
 		panelDestText.add(scrollPaneDestText, BorderLayout.CENTER);
 		
 		buttonDetect = new JButton("Detect Languages");
