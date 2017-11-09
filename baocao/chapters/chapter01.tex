@@ -2,13 +2,15 @@
 
 \begin{document}
 
-Google Translate là một dịch vụ dịch thuật được phát triển bởi Google hỗ trợ trên 100 ngôn ngữ. Số liệu thống kê vào tháng 05 năm 2013 cho thấy, Google Translate phục vụ dịch thuật cho hơn 200 triệu người mỗi ngày.
+Google Translate là một dịch vụ dịch thuật được phát triển bởi Google hỗ trợ trên 100 ngôn ngữ khác nhau. Số liệu thống kê vào tháng 05 năm 2013 cho thấy, Google Translate phục vụ dịch thuật cho hơn 200 triệu người mỗi ngày.
 
-Google Cloud Translation API là một API thuộc Cloud Machine Learning API. Cloud Translation API cung cấp một giao diện lập trình ứng dụng đơn giản để lập trình viên có thể tích hợp tính năng phiên dịch (Translation) của Google vào website hoặc ứng dụng của họ. Với tính tương thích cao, các website và ứng dụng tích hợp Google Translation API hoạt động rất hiệu quả trong việc phiên dịch từ một ngôn ngữ sang một ngôn ngữ khác (Ví dụ: từ tiếng Anh sang tiếng Việt). Ngoài ra, tính năng nhận diện ngôn ngữ cũng hoạt động khá hiệu quả khi ngôn ngữ gốc chưa được xác định.
+Google Cloud Translation API là một API thuộc nhóm Cloud Machine Learning API. Cloud Translation API cung cấp một giao diện lập trình ứng dụng đơn giản để lập trình viên có thể tích hợp tính năng phiên dịch (Translation) của Google vào website hoặc ứng dụng của họ. Với tính tương thích cao, các website và ứng dụng tích hợp Google Translation hoạt động rất hiệu quả trong việc phiên dịch từ một ngôn ngữ sang một ngôn ngữ khác (Ví dụ: từ tiếng Anh sang tiếng Việt). Ngoài ra, tính năng phát hiện ngôn ngữ cũng hoạt động khá hiệu quả khi ngôn ngữ gốc chưa được xác định.
+
+Trong tài liệu này, chúng tôi sử dụng Google Cloud Translation API version 2 revision 51. Minh hoạ bằng ngôn ngữ lập trình Java. 
 
 \section{Đăng ký sử dụng Google Cloud Platform}
-Ta sử dụng tài khoản Google để truy cập đến các dịch vụ của Google Cloud Platform. Để nhận \$300 credit dùng thử trong 1 năm từ Google, ta truy cập vào link:
-\begin{lstlisting}[numbers=none, frame=none,xleftmargin=0cm]
+Để truy cập đến các dịch vụ của Google Cloud Platform, ta sử dụng tài khoản Google. Để nhận \$300 credit dùng thử trong 1 năm từ Google, ta truy cập vào link:
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
 https://console.cloud.google.com/freetrial
 \end{lstlisting}
 và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả thông tin thẻ tín dụng (Hình \ref{Dien day du thong tin ma Google yeu cau} và \ref{Thong bao cua Google khi dang ky thanh cong}).
@@ -39,7 +41,7 @@ và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả t
 \section{Kích hoạt Google Cloud Translation API}
 \begin{enumerate}
 	\item Từ thanh tìm kiếm, nhập từ khoá ``Google Cloud Translation API''.
-	\item Nhấp vào nút Enable để kích hoạt dịch vụ Translation (Hình \ref{Kich hoat dich vu Translation}).
+	\item Nhấp vào nút ``Enable'' để kích hoạt dịch vụ Translation (Hình \ref{Kich hoat dich vu Translation}).
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{enable.png}
 		\caption{Kích hoạt dịch vụ Translation}
@@ -51,15 +53,12 @@ và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả t
 \begin{enumerate}
 	\item Từ Google Cloud Platform Console menu, vào APIs and services > Credentials.
 	\item Tạo một API key và tiến hành hạn chế quyền truy cập đến API key này.
-	% TODO: Chèn hình vào đây và ref lên trên
 \end{enumerate}
-
-\section{Xác minh quyền truy cập đến Google Translation API}
 
 \section{Tạo một project trên Eclipse}
 \begin{enumerate}
 	\item Cài đặt gói M2Eclipse.
-	\item Vào File > New > Other\ldots > Maven > Maven Project. (Hình \ref{Tao mot project Maven tren Eclipse} và \ref{Thiet lap Archetype Parameters})
+	\item Vào File > New > Other\ldots > Maven > Maven Project (Hình \ref{Tao mot project Maven tren Eclipse} và \ref{Thiet lap Archetype Parameters}).
 	
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{create-maven-project-1.png}
@@ -75,9 +74,9 @@ và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả t
 	\item Mở file cấu hình Maven pom.xml vào thêm vào mục Dependencies\footnote{https://developers.google.com/api-client-library/java/apis/translate/v2} (Hình \ref{Them Dependencies}).
 	
 	\begin{itemize}
-		\item Group Id: com.google.apis
-		\item Artifact Id: google-api-services-translate
-		\item Version: v2-rev51-1.23.0
+		\item Group Id: \lstinline{com.google.apis}
+		\item Artifact Id: \lstinline{google-api-services-translate}
+		\item Version: \lstinline{v2-rev51-1.23.0}
 	\end{itemize}
 	
 	\begin{figure}

@@ -2,14 +2,99 @@
 
 \begin{document}
 
-Chương này sẽ mô tả cách sử dụng Cloud Translation API để dịch văn bản. Phương thức dịch văn bản đơn giản:
-\begin{lstlisting}[language=Java]
-public static void translateText(String sourceText, PrintStream out) {
-	Translate translate = createTranslateService();
-	Translation translation = translate.translate(sourceText);
-	out.printf("Source Text:\n\t%s\n", sourceText);
-	out.printf("Translated Text:\n\t%s\n", translation.getTranslatedText());
+Chương này sẽ mô tả cách sử dụng Cloud Translation API để dịch văn bản thông qua dịch vụ Translate.
+
+\section{Phương thức GET}
+Sau đây là cách sử dụng phương thức GET của HTTP, ta copy URL kèm theo các tham số và dán vào trình duyệt. URL có dạng:
+
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+https://translation.googleapis.com/language/translate/v2
+\end{lstlisting}
+
+Các tham số:
+\begin{enumerate}
+  \item Ngôn ngữ đích (Target Language): sử dụng tham số \lstinline{target} để xác định ngôn ngữ mà ta muốn dịch sang. Giá trị của tham số này là mã ISO-639-1 của ngôn ngữ đích.
+  \item Chuỗi văn bản cần dịch (Source text string): sử dụng tham số \lstinline{q} để xác định nội dung cần dịch.
+  \item API key: sử dụng tham số \lstinline{key} để Google có thể xác minh quyền truy cập của ta đến Translation API.
+\end{enumerate}
+
+Khi sử dụng phương thức này, URL kèm theo các tham số phải ít hơn 2000 ký tự. 
+
+Ví dụ: dịch một chuỗi ``He is a student'' sang tiếng Séc thì URL sẽ có dạng
+
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+https://translation.googleapis.com/language/translate/v2?q=He is a student&target=cs&key=MY_API_KEY
+\end{lstlisting}
+với \lstinline{MY_API_KEY} là API key mà ta đã tạo.
+
+Kết quả nhận được ở dạng JSON như sau:
+
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+{
+  "data": {
+    "translations": [
+      {
+        "translatedText": "On je student",
+        "detectedSourceLanguage": "en"
+      }
+    ]
+  }
 }
 \end{lstlisting}
+
+\section{Phương thức POST}
+
+Phương thức POST được định nghĩa như sau:
+
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+POST https://translation.googleapis.com/language/translate/v2?key=YOUR_API_KEY
+\end{lstlisting}
+
+Ta sử dụng nhiều tham số \lstinline{q} để định nghĩa các chuỗi cần dịch và tham số \lstinline{target} để định nghĩa ngôn ngữ đích. Các tham số này đặt trong chuỗi JSON:
+
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+{
+  'q': 'Hello world',
+  'q': 'My name is Jeff',
+  'target': 'de'
+}
+\end{lstlisting}
+
+Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được như sau:
+
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+{
+  "data": {
+    "translations": [
+      {
+        "translatedText": "Hallo Welt",
+        "detectedSourceLanguage": "en"
+      },
+      {
+        "translatedText": "Mein Name ist Jeff",
+        "detectedSourceLanguage": "en"
+      }
+    ]
+  }
+} 
+\end{lstlisting}
+
+\section{Dịch vụ Translate trong Java}
+Để sử dụng dịch vụ Translate trong Java, ta thực hiện theo quy trình sau:
+\begin{enumerate}
+  \item Tạo một đối tượng thuộc lớp \lstinline{Translate.Builder}.
+  \item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
+  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Translations.List}) và sử dụng các phương thức setter để định các tham số cho phương thức POST.
+  \item Thực thi yêu cầu bằng phương thức \lstinline{execute()}. Kết quả trả về ở dạng JSON, thuộc lớp \lstinline{TranslationsListResponse}.
+  \item Dùng phương thức \lstinline{getTranslations()} nhận về một \lstinline{List} các đối tượng thuộc lớp \lstinline{TranslationResource}.
+  \item Dùng các phương thức \lstinline{getDetectedSourceLanguage()} và \lstinline{getTranslatedText()} để nhận về các chuỗi đã dịch và ngôn ngữ được phát hiện.
+\end{enumerate}
+
+\section*{Tham khảo}
+
+\begin{enumerate}
+  \item Documentation - Translating Text: https://goo.gl/tQgYgy
+  \item Google Cloud Translation API Java Docs: https://goo.gl/bnU3ES
+\end{enumerate}
 
 \end{document}

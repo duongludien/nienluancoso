@@ -2,6 +2,52 @@
 
 \begin{document}
 
-Nội dung chương 03
+Như đã đề cập trong phần giới thiệu, Google Translate hỗ trợ trên 100 ngôn ngữ khác nhau. Để liệt kê các ngôn ngữ được hỗ trợ, ta cũng sử dụng HTTP request gọi đến dịch vụ SupportedLanguages.
+
+\section{Giao thức}
+
+Phương thức GET được định nghĩa như sau:
+
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+GET https://translation.googleapis.com/language/translate/v2/languages?key=YOUR_API_KEY
+\end{lstlisting}
+
+Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được như sau:
+
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+{
+  "data": {
+    "languages": [
+      {
+        "language": "en"
+      },
+      {
+        "language": "fr"
+      },
+      ...
+      {
+        "language": "zh-CN"
+      }
+    ]
+  }
+}
+\end{lstlisting}
+
+\section{Dịch vụ SupportedLanguages trong Java}
+Để sử dụng dịch vụ SupportedLanguages trong Java, ta thực hiện theo quy trình sau:
+\begin{enumerate}
+  \item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
+  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Languages.List}) và sử dụng các phương thức setter để định các tham số cho yêu cầu.
+  \item Thực thi yêu cầu bằng phương thức \lstinline{execute()}. Kết quả trả về ở dạng JSON, thuộc lớp \lstinline{LanguagesListResponse}.
+  \item Dùng phương thức \lstinline{getLanguages()} nhận về một \lstinline{List} các đối tượng thuộc lớp \lstinline{LanguagesResource}.
+  \item Dùng các phương thức \lstinline{getLanguage()} để nhận về mã ISO-639-1 và phương thức \lstinline{getName()} để nhận tên của các ngôn ngữ.
+\end{enumerate}
+
+\section*{Tham khảo}
+
+\begin{enumerate}
+  \item Documentation - Discovering Supported Languages: https://goo.gl/tQgYgy
+  \item Google Cloud Translation API Java Docs: https://goo.gl/bnU3ES
+\end{enumerate}
 
 \end{document}
