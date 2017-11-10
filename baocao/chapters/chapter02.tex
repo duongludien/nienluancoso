@@ -4,42 +4,11 @@
 
 Chương này sẽ mô tả cách sử dụng Cloud Translation API để dịch văn bản thông qua dịch vụ Translate.
 
-% \section{Phương thức GET}
-% Sau đây là cách sử dụng phương thức GET của HTTP, ta copy URL kèm theo các tham số và dán vào trình duyệt. URL có dạng:
-% 
-% \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
-% https://translation.googleapis.com/language/translate/v2
-% \end{lstlisting}
-
-% Khi sử dụng phương thức này, URL kèm theo các tham số phải ít hơn 2000 ký tự. 
-% 
-% Ví dụ: dịch một chuỗi ``He is a student'' sang tiếng Séc thì URL sẽ có dạng
-% 
-% \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
-% https://translation.googleapis.com/language/translate/v2?q=He is a student&target=cs&key=MY_API_KEY
-% \end{lstlisting}
-% với \lstinline{MY_API_KEY} là API key mà ta đã tạo.
-% 
-% Kết quả nhận được ở dạng JSON như sau:
-% 
-% \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
-% {
-%   "data": {
-%     "translations": [
-%       {
-%         "translatedText": "On je student",
-%         "detectedSourceLanguage": "en"
-%       }
-%     ]
-%   }
-% }
-% \end{lstlisting}
-
 \section{HTTP request}
 
 Lệnh POST được định nghĩa như sau:
 
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+\begin{lstlisting}[style=link]
 POST https://translation.googleapis.com/language/translate/v2?key=YOUR_API_KEY
 \end{lstlisting}
 
@@ -79,7 +48,7 @@ API key. Nếu sử dụng OAuth 2.0 thì không cần tham số này.\\
 
 Ta sử dụng nhiều tham số \lstinline{q} để định nghĩa các chuỗi cần dịch và tham số \lstinline{target} để định nghĩa ngôn ngữ đích. Các tham số này đặt trong chuỗi JSON:
 
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+\begin{lstlisting}[style=link]
 {
   'q': 'Hello world',
   'q': 'My name is Jeff',
@@ -89,7 +58,7 @@ Ta sử dụng nhiều tham số \lstinline{q} để định nghĩa các chuỗi
 
 Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được như sau:
 
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+\begin{lstlisting}[style=link]
 {
   "data": {
     "translations": [

@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt,twoside]{report}
+\documentclass[a4paper,12pt,twoside,openright]{report}	% twoside, openright: 2 mặt, trang đầu chương luôn nằm bên tay phải
 \usepackage[utf8]{vietnam}
 \usepackage[top=3cm,inner=3.5cm,outer=2cm,bottom=3cm,headheight=110pt]{geometry}		% Dùng để set margin
 \usepackage{graphicx}			% Dùng để chèn hình ảnh 
@@ -6,16 +6,37 @@
 \usepackage{subfiles}			% Dùng để chia thành các files nhỏ
 \usepackage{fancyhdr}			% Dùng để tạo header và footer
 \usepackage{listings}			% Dùng để chèn source code vào luận văn
+\usepackage{emptypage}			% Không đánh số trang, header, footer với các trang trắng
 
-% Định dạng source code
-\lstset{
+% Định dạng mặc định
+\lstset {
 	basicstyle=\small\ttfamily, 	% Font family và font size 
 	numbers=left,					% Hiển thị số thứ tự dòng				
 	tabsize=4,						% Tab size 
 	frame=leftline,					% Hiển thị 1 gạch bên tay trái source code 
 	xleftmargin=1cm,				% Set margin-left 
 	breaklines=true,
-	%postbreak=\mbox{{$\hookrightarrow$}\space},
+}
+
+% Tạo một style tên là code để định dạng source code
+\lstdefinestyle{code}{
+	basicstyle=\small\ttfamily, 	% Font family và font size 
+	numbers=left,					% Hiển thị số thứ tự dòng				
+	tabsize=4,						% Tab size 
+	frame=leftline,					% Hiển thị 1 gạch bên tay trái source code 
+	xleftmargin=1cm,				% Set margin-left 
+	breaklines=true,
+}
+
+% Tạo một style tên là link để đặt các liên kết trong báo cáo
+\lstdefinestyle{link}{
+	basicstyle=\small\ttfamily,
+	numbers=none,
+	tabsize=4,
+	frame=single,
+	xleftmargin=0.15cm,
+	xrightmargin=0.15cm,
+	breaklines=true,
 }
 
 \usepackage{tabularx}			% Dùng để chèn bảng

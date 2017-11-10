@@ -5,8 +5,8 @@
 Một trong những tính năng ưu việt của Google Translate là phát hiện ngôn ngữ. Tính năng này được bao gồm trong tính năng dịch, tuy nhiên Google cũng phát triển nó thành một dịch vụ riêng gọi là Detecting Language để ta có thể phát hiện ngôn ngữ mà không cần phải dịch.
 
 \section{HTTP request}
-Lệnh POST có dạng như sau:
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+Lệnh \lstinline{POST} có dạng như sau:
+\begin{lstlisting}[style=link]
 POST https://translation.googleapis.com/language/translate/v2/detect
 \end{lstlisting}
 
@@ -28,7 +28,7 @@ API key. Nếu sử dụng OAuth 2.0 thì không cần tham số này.\\
 
 \section{Kết quả trả về}
 Nếu thành công, kết quả trả về ở dạng JSON như sau:
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+\begin{lstlisting}[style=link]
 {
 	"data": {
 		object(DetectLanguageResponseList)
@@ -42,12 +42,55 @@ Các trường dữ liệu:
 \hline
 \lstinline{data} & \lstinline{object (ListValue)}
 
-Danh sách các ngôn ngữ được phát hiện. Danh sách này sẽ bao gồm kết quả phát hiện ngôn ngữ cho mỗi giá trị của \lstinline{q} trong HTTP request.\\
+Danh sách các kết quả phát hiện ngôn ngữ. Danh sách này sẽ bao gồm kết quả phát hiện ngôn ngữ cho mỗi giá trị của \lstinline{q} trong HTTP request.\\
 \hline
 \end{tabularx}
 \end{center}
 
 \section{DetectLanguageResponseList}
-Kết quả chứa các danh sách 
+Mỗi phần tử trong danh sách kết quả là một mảng các thông tin liên quan đến ngôn ngữ được phát hiện. Nó có dạng JSON như sau:
+
+\begin{lstlisting}[style=link]
+{
+	"detections": [
+		array
+	],
+}
+\end{lstlisting}
+
+Các trường dữ liệu:
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.2\textwidth}|X|}
+\hline
+\lstinline{detections[]} & \lstinline{array (ListValue format)}
+
+Kết quả phát hiện ngôn ngữ cho mỗi giá trị của \lstinline{q}. Mỗi \lstinline{ListValue} gồm các trường sau:
+
+\begin{itemize}
+  \item \lstinline{language (string)} - Ngôn ngữ được phát hiện.
+  \item \lstinline{isReliable (boolean)} - Kết quả phát hiện ngôn ngữ có đáng tin hay không.
+  \item \lstinline{confidence (float)} - Độ tin cậy.
+\end{itemize}
+\\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{Dịch vụ Detecting Language trong Java}
+Để sử dụng dịch vụ Detecting Language trong Java, ta thực hiện theo quy trình sau:
+\begin{enumerate}
+  \item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
+  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Detections.List}) và sử dụng các setter để định các tham số cho lệnh \lstinline{POST}.
+  \item Thực thi yêu cầu bằng phương thức \lstinline{execute()}. Kết quả trả về ở dạng JSON, thuộc lớp \lstinline{DetectionsListResponse}.
+  \item Dùng phương thức \lstinline{getDetections()} nhận về một \lstinline{List} mà mỗi phần tử của nó là một \lstinline{List} các đối tượng thuộc lớp \lstinline{DetectionsResourceItems}.
+  \item Chạy 2 vòng lặp \lstinline{for} và dùng phương thức \lstinline{getLanguage()} để nhận về mã ISO-639-1 của các ngôn ngữ được phát hiện.
+\end{enumerate}
+
+\section*{Tham khảo}
+
+\begin{enumerate}
+  \item Documentation - Detecting Language: https://goo.gl/BX1Ujr
+  \item Google Cloud Translation API Java Docs: https://goo.gl/bnU3ES
+\end{enumerate}
 
 \end{document}

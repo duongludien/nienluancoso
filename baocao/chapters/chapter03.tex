@@ -2,13 +2,13 @@
 
 \begin{document}
 
-Như đã đề cập trong phần giới thiệu, Google Translate hỗ trợ trên 100 ngôn ngữ khác nhau. Để liệt kê các ngôn ngữ được hỗ trợ, ta cũng sử dụng HTTP request gọi đến dịch vụ Supported Languages.
+Như đã đề cập trong phần giới thiệu, Google Translate hỗ trợ trên 100 ngôn ngữ khác nhau. Để liệt kê các ngôn ngữ được hỗ trợ, ta sử dụng HTTP request gọi đến dịch vụ Supported Languages.
 
 \section{HTTP request}
 
 Lệnh GET được định nghĩa như sau:
 
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+\begin{lstlisting}[style=link]
 GET https://translation.googleapis.com/language/translate/v2/languages?key=YOUR_API_KEY
 \end{lstlisting}
 
@@ -19,7 +19,7 @@ Các tham số:
 \hline
 \lstinline{target} & \textbf{string}
 
-Ngôn ngữ của kết quả mà ta muốn nhận được (Ví dụ; tiếng Anh). Nếu \lstinline{target} được xác định thì tên của các ngôn ngữ sẽ được trả về trong trường \lstinline{name}. Ngược lại, ta chỉ nhận được mã ISO-639-1 của chúng.\\
+Ngôn ngữ của kết quả mà ta muốn nhận được (Ví dụ: en). Nếu \lstinline{target} được xác định thì tên của các ngôn ngữ sẽ được trả về trong trường \lstinline{name}. Ngược lại, ta chỉ nhận được mã ISO-639-1 của chúng.\\
 \hline
 \lstinline{model} & \textbf{string}
 
@@ -36,7 +36,7 @@ API key. Nếu sử dụng OAuth 2.0 thì không cần tham số này.\\
 
 Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được là một chuỗi JSON có dạng như sau:
 
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+\begin{lstlisting}[style=link]
 {
   "data": {
     "languages": [
@@ -55,7 +55,7 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 }
 \end{lstlisting}
 
-\section{Dịch vụ SupportedLanguages trong Java}
+\section{Dịch vụ Supported Languages trong Java}
 Để sử dụng dịch vụ SupportedLanguages trong Java, ta thực hiện theo quy trình sau:
 \begin{enumerate}
   \item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
