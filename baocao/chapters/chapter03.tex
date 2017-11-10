@@ -34,6 +34,58 @@ API key. Nếu sử dụng OAuth 2.0 thì không cần tham số này.\\
 \end{tabularx}
 \end{center}
 
+\section{Kết quả trả về}
+Nếu thành công, kết quả trả về ở dạng JSON như sau:
+\begin{lstlisting}[style=link]
+{
+	"data": {
+		object(GetSupportedLanguagesResponseList)
+	},
+}
+\end{lstlisting}
+
+Các trường dữ liệu:
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.15\textwidth}|X|}
+\hline
+\lstinline{data} & \lstinline{object(GetSupportedLanguagesResponseList)}
+
+Danh sách các ngôn ngữ được hỗ trợ bởi Translation API.\\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{GetSupportedLanguagesResponseList}
+Mỗi phần tử trong danh sách kết quả là một mảng các thông tin liên quan đến ngôn ngữ được hỗ trợ. Nó có dạng JSON như sau:
+
+\begin{lstlisting}[style=link]
+{
+	"languages": [
+		{
+			object(GetSupportedLanguagesResponseLanguage)
+		}
+	],
+}
+\end{lstlisting}
+
+Các trường dữ liệu:
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.2\textwidth}|X|}
+\hline
+\lstinline{languages[]} & \lstinline{array (GetSupportedLanguagesResponseLanguage)}
+
+Tập các ngôn ngữ được hỗ trợ.\\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{Ví dụ}
+\subsection{Nhận về danh sách các ngôn ngữ được hỗ trợ}
+HTTP request sau dùng để nhận về mã ISO-639-1 của các ngôn ngữ được hỗ trợ:
+\begin{lstlisting}[style=link]
+GET https://translation.googleapis.com/language/translate/v2/languages?key=YOUR_API_KEY
+\end{lstlisting}
+
 Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được là một chuỗi JSON có dạng như sau:
 
 \begin{lstlisting}[style=link]
@@ -41,14 +93,71 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 	"data": {
 		"languages": [
 			{
-				"language": "en"
-			},
-			{
-				"language": "fr"
+				"language": "af"
 			},
 			...
 			{
-				"language": "zh-CN"
+				"language": "vi"
+			},
+			{
+				"language": "zh"
+			},
+			{
+				"language": "zh-TW"
+			},
+      		{
+				"language": "zu"
+			}
+		]
+	}
+}
+\end{lstlisting}
+
+\subsection{Nhận về danh sách các ngôn ngữ được hỗ trợ dưới dạng ngôn ngữ nào đó}
+HTTP request sau dùng để nhận về mã ISO-639-1 và tên của các ngôn ngữ được hỗ trợ bằng tiếng Anh:
+\begin{lstlisting}[style=link]
+GET https://translation.googleapis.com/language/translate/v2/languages?key=YOUR_API_KEY
+\end{lstlisting}
+\begin{lstlisting}[style=link]
+{
+	"target": "zh-TW"
+}
+\end{lstlisting}
+
+Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được là một chuỗi JSON có dạng như sau:
+
+\begin{lstlisting}[style=link]
+{
+	"data": {
+		"languages": [
+			{
+				"language": "af",
+				"name": "Afrikaans"
+			},
+			...
+			{
+				"language": "vi",
+				"name": "Vietnamese"
+			},
+			{
+				"language": "cy",
+				"name": "Welsh"
+			},
+			{
+				"language": "xh",
+				"name": "Xhosa"
+			},
+			{
+				"language": "yi",
+				"name": "Yiddish"
+			},
+			{
+				"language": "yo",
+				"name": "Yoruba"
+			},
+			{
+				"language": "zu",
+				"name": "Zulu"
 			}
 		]
 	}
@@ -59,7 +168,7 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 Để sử dụng dịch vụ SupportedLanguages trong Java, ta thực hiện theo quy trình sau:
 \begin{enumerate}
   \item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
-  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Translations.List}) và sử dụng các setter để định các tham số cho lệnh POST.
+  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Languages.List}) và sử dụng các setter để định các tham số cho lệnh \lstinline{GET}.
   \item Thực thi yêu cầu bằng phương thức \lstinline{execute()}. Kết quả trả về ở dạng JSON, thuộc lớp \lstinline{LanguagesListResponse}.
   \item Dùng phương thức \lstinline{getLanguages()} nhận về một \lstinline{List} các đối tượng thuộc lớp \lstinline{LanguagesResource}.
   \item Dùng các phương thức \lstinline{getLanguage()} để nhận về mã ISO-639-1 và phương thức \lstinline{getName()} để nhận tên của các ngôn ngữ.
