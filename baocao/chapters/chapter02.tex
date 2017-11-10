@@ -6,7 +6,7 @@ Chương này sẽ mô tả cách sử dụng Cloud Translation API để dịch
 
 \section{HTTP request}
 
-Lệnh POST được định nghĩa như sau:
+Lệnh \lstinline{POST} được định nghĩa như sau:
 
 \begin{lstlisting}[style=link]
 POST https://translation.googleapis.com/language/translate/v2?key=YOUR_API_KEY
@@ -35,7 +35,7 @@ Mã ISO-639-1 của \lstinline{q}. Nếu không cung cấp tham số này, API s
 \hline
 \lstinline{model} & \textbf{string}
 
-Mô hình dịch. Nếu có giá trị là \lstinline{base} thì API sẽ sử dụng mô hình Phrase-Based Machine Translation (PBMT), hoặc \lstinline{nmt} cho mô hình Neural Machine Translation (NMT). Nếu bỏ qua tham số này, mô hình nmt sẽ được sử dụng.
+Mô hình dịch. Nếu có giá trị là \lstinline{base} thì API sẽ sử dụng mô hình Phrase-Based Machine Translation (PBMT), hoặc \lstinline{nmt} cho mô hình Neural Machine Translation (NMT). Nếu bỏ qua tham số này, mô hình nmt sẽ được ưu tiên sử dụng.
 
 Mô hình NMT chỉ hỗ trợ khi ngôn ngữ nguồn hoặc đích là tiếng Anh (en).\\
 \hline
@@ -46,51 +46,103 @@ API key. Nếu sử dụng OAuth 2.0 thì không cần tham số này.\\
 \end{tabularx}
 \end{center}
 
-Ta sử dụng nhiều tham số \lstinline{q} để định nghĩa các chuỗi cần dịch và tham số \lstinline{target} để định nghĩa ngôn ngữ đích. Các tham số này đặt trong chuỗi JSON:
-
+\section{Kết quả trả về}
+Nếu thành công, kết quả trả về ở dạng JSON như sau:
 \begin{lstlisting}[style=link]
 {
-  'q': 'Hello world',
-  'q': 'My name is Jeff',
-  'target': 'de'
+	"data": {
+		object(TranslateTextResponseList)
+	},
 }
 \end{lstlisting}
 
-Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được như sau:
+Các trường dữ liệu:
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.15\textwidth}|X|}
+\hline
+\lstinline{data} & \lstinline{object(TranslateTextResponseList)}
+
+Danh sách các kết quả dịch cho mỗi giá trị của \lstinline{q}.\\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{TranslateTextResponseList}
+Mỗi phần tử trong danh sách kết quả là một mảng các thông tin liên quan đến giá trị \lstinline{q} đã được dịch. Nó có dạng JSON như sau:
 
 \begin{lstlisting}[style=link]
 {
-  "data": {
-    "translations": [
-      {
-        "translatedText": "Hallo Welt",
-        "detectedSourceLanguage": "en"
-      },
-      {
-        "translatedText": "Mein Name ist Jeff",
-        "detectedSourceLanguage": "en"
-      }
-    ]
-  }
-} 
+	"translations": [
+		array
+	],
+}
 \end{lstlisting}
+
+Các trường dữ liệu:
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.2\textwidth}|X|}
+\hline
+\lstinline{translations[]} & \lstinline{array (TranslateTextResponseTranslation)}
+
+Kết quả dịch.\\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{Dịch văn bản}
+\subsection{Dịch chuỗi văn bản}
+Sử dụng tham số \lstinline{q} để định các chuỗi văn bản cần dịch. HTTP request sau dịch 2 chuỗi sang tiếng Phần Lan:
+\begin{lstlisting}[style=link]
+ POST https://translation.googleapis.com/language/translate/v2?key=YOUR_API_KEY
+\end{lstlisting}
+\begin{lstlisting}[style=link]
+{
+	'q': 'Hello world',
+	'q': 'My name is Jeff',
+	'target': 'fi'
+}
+\end{lstlisting}
+
+Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được là một chuỗi JSON có dạng như sau:
+
+\begin{lstlisting}[style=link]
+{
+	"data": {
+		"translations": [
+			{
+				"translatedText": "Hei maailma",
+				"detectedSourceLanguage": "en"
+			},
+			{
+				"translatedText": "Nimeni on Jeff",
+				"detectedSourceLanguage": "en"
+			}
+		]
+	}
+}
+\end{lstlisting}
+
+\subsection{Sử dụng một mô hình cụ thể}
+Mặc định, mô hình NMT được ưu tiên sử dụng. Trong trường hợp không sử dụng được mô hình NMT, mô hình PBMT được sử dụng. Ta sẽ thử dịch cùng một đoạn văn bản sử dụng 2 mô hình này và so sánh kết quả.
+
 
 \section{Dịch vụ Translate trong Java}
 Để sử dụng dịch vụ Translate trong Java, ta thực hiện theo quy trình sau:
 \begin{enumerate}
   \item Tạo một đối tượng thuộc lớp \lstinline{Translate.Builder}.
   \item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
-  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Translations.List}) và sử dụng các setter để định các tham số cho lệnh POST.
+  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Translations.List}) và sử dụng các setter để định các tham số cho lệnh \lstinline{POST}.
   \item Thực thi yêu cầu bằng phương thức \lstinline{execute()}. Kết quả trả về ở dạng JSON, thuộc lớp \lstinline{TranslationsListResponse}.
   \item Dùng phương thức \lstinline{getTranslations()} nhận về một \lstinline{List} các đối tượng thuộc lớp \lstinline{TranslationResource}.
-  \item Dùng các phương thức \lstinline{getDetectedSourceLanguage()} và \lstinline{getTranslatedText()} để nhận về các chuỗi đã dịch và ngôn ngữ được phát hiện.
+  \item Dùng các phương thức \lstinline{getDetectedSourceLanguage()} và \lstinline{getTranslatedText()} để nhận về các chuỗi đã dịch và ngôn ngữ được phát hiện (nếu tham số \lstinline{source} chưa được xác định).
 \end{enumerate}
 
 \section*{Tham khảo}
 
 \begin{enumerate}
-  \item Documentation - Translating Text: https://goo.gl/tQgYgy
-  \item Google Cloud Translation API Java Docs: https://goo.gl/bnU3ES
+  \item Documentation - Translating Text: https://goo.gl/Qbziwx
+  \item REST Reference - translate: https://goo.gl/uRtqmi
+  \item Google Cloud Translation API v2 Java Docs: https://goo.gl/bnU3ES
 \end{enumerate}
 
 \end{document}
