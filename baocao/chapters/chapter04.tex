@@ -76,6 +76,73 @@ Kết quả phát hiện ngôn ngữ cho mỗi giá trị của \lstinline{q}. M
 \end{tabularx}
 \end{center}
 
+\section{Ví dụ}
+\subsection{Nhận diện ngôn ngữ trên một chuỗi}
+HTTP request sau dùng để nhận diện ngôn ngữ của chuỗi ``He is a student'':
+\begin{lstlisting}[style=link]
+POST https://translation.googleapis.com/language/translate/v2/detect?key=YOUR_API_KEY
+\end{lstlisting}
+\begin{lstlisting}[style=link]
+{
+	'q': 'He is a student',
+}
+\end{lstlisting}
+
+Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được là một chuỗi JSON có dạng như sau:
+
+\begin{lstlisting}[style=link]
+{
+	"data": {
+		"detections": [
+			[
+				{
+					"confidence": 1,
+					"isReliable": false,
+					"language": "en"
+				}
+			]
+		]
+	}
+}
+\end{lstlisting}
+
+\subsection{Nhận diện ngôn ngữ trên nhiều chuỗi}
+Để nhận diện ngôn ngữ trên nhiều chuỗi, ta sử dụng tham số \lstinline{q} để định nghĩa cho mỗi chuỗi. Ví dụ này sử dụng 2 chuỗi:
+\begin{lstlisting}[style=link]
+POST https://translation.googleapis.com/language/translate/v2/detect?key=YOUR_API_KEY
+\end{lstlisting}
+\begin{lstlisting}[style=link]
+{
+	'q': 'Hello world',
+	'q': 'Hei maailma'
+}
+\end{lstlisting}
+
+Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được là một chuỗi JSON có dạng như sau:
+
+\begin{lstlisting}[style=link]
+{
+	"data": {
+		"detections": [
+			[
+				{
+					"confidence": 1,
+					"isReliable": false,
+					"language": "en"
+				}
+			],
+			[
+				{
+					"confidence": 1,
+					"isReliable": false,
+					"language": "fi"
+				}
+			]
+		]
+	}
+}
+\end{lstlisting}
+
 \section{Dịch vụ Detecting Language trong Java}
 Để sử dụng dịch vụ Detecting Language trong Java, ta thực hiện theo quy trình sau:
 \begin{enumerate}
