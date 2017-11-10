@@ -9,6 +9,7 @@ Google Cloud Translation API là một API thuộc nhóm Cloud Machine Learning 
 Trong tài liệu này, chúng tôi sử dụng Google Cloud Translation API version 2 revision 51. Minh hoạ bằng ngôn ngữ lập trình Java. 
 
 \section{Đăng ký sử dụng Google Cloud Platform}
+
 Để truy cập đến các dịch vụ của Google Cloud Platform, ta sử dụng tài khoản Google. Để nhận \$300 credit dùng thử trong 1 năm từ Google, ta truy cập vào link:
 \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
 https://console.cloud.google.com/freetrial
@@ -28,26 +29,33 @@ và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả t
 \end{figure}
 
 \section{Tạo một project trên Google API Console}
+
 \begin{enumerate}
 	\item Truy cập vào Google Cloud Platform Console.
-	\item Tạo một project tên là ``translation'' (Hình \ref{Tao mot project tren Google Cloud Platform}).
+	\begin{item}
+	Tạo một project tên là ``translation'' (Hình \ref{Tao mot project tren Google Cloud Platform}).
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{create-project.png}
 		\caption{Tạo một project trên Google Cloud Platform}
 		\label{Tao mot project tren Google Cloud Platform}
 	\end{figure}
+	\end{item}
 \end{enumerate}
 
 \section{Kích hoạt Google Cloud Translation API}
 \begin{enumerate}
 	\item Từ thanh tìm kiếm, nhập từ khoá ``Google Cloud Translation API''.
-	\item Nhấp vào nút ``Enable'' để kích hoạt dịch vụ Translation (Hình \ref{Kich hoat dich vu Translation}).
+	\begin{item}
+	Nhấp vào nút ``Enable'' để kích hoạt dịch vụ Translation (Hình \ref{Kich hoat dich vu Translation}).
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{enable.png}
 		\caption{Kích hoạt dịch vụ Translation}
 		\label{Kich hoat dich vu Translation}
 	\end{figure}
+	\end{item}
 \end{enumerate}
+
+% TODO: Bổ sung phần OAuth 2.0
 
 \section{Lấy API Key}
 \begin{enumerate}
@@ -58,8 +66,8 @@ và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả t
 \section{Tạo một project trên Eclipse}
 \begin{enumerate}
 	\item Cài đặt gói M2Eclipse.
-	\item Vào File > New > Other\ldots > Maven > Maven Project (Hình \ref{Tao mot project Maven tren Eclipse} và \ref{Thiet lap Archetype Parameters}).
-	
+	\begin{item}
+	Vào File > New > Other\ldots > Maven > Maven Project (Hình \ref{Tao mot project Maven tren Eclipse} và \ref{Thiet lap Archetype Parameters}).
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{create-maven-project-1.png}
 		\caption{Tạo một project Maven trên Eclipse}
@@ -70,20 +78,19 @@ và điền đầy đủ các thông tin mà Google yêu cầu, bao gồm cả t
 		\caption{Thiết lập Archetype Parameters}
 		\label{Thiet lap Archetype Parameters}
 	\end{figure}
-	
-	\item Mở file cấu hình Maven pom.xml vào thêm vào mục Dependencies\footnote{https://developers.google.com/api-client-library/java/apis/translate/v2} (Hình \ref{Them Dependencies}).
-	
+	\end{item}	
+	\begin{item}
+	Mở file pom.xml và thêm gói Translation API vào mục Dependencies\footnote{https://developers.google.com/api-client-library/java/apis/translate/v2} (Hình \ref{Them Dependencies}).
 	\begin{itemize}
 		\item Group Id: \lstinline{com.google.apis}
 		\item Artifact Id: \lstinline{google-api-services-translate}
 		\item Version: \lstinline{v2-rev51-1.23.0}
 	\end{itemize}
-	
 	\begin{figure}
 		\includegraphics[width=\textwidth, keepaspectratio]{create-maven-project-3.png}
 		\caption{Thêm Dependencies}
 		\label{Them Dependencies}
 	\end{figure}
-	
+	\end{item}
 \end{enumerate}
 \end{document}

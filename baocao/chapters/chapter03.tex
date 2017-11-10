@@ -2,17 +2,39 @@
 
 \begin{document}
 
-Như đã đề cập trong phần giới thiệu, Google Translate hỗ trợ trên 100 ngôn ngữ khác nhau. Để liệt kê các ngôn ngữ được hỗ trợ, ta cũng sử dụng HTTP request gọi đến dịch vụ SupportedLanguages.
+Như đã đề cập trong phần giới thiệu, Google Translate hỗ trợ trên 100 ngôn ngữ khác nhau. Để liệt kê các ngôn ngữ được hỗ trợ, ta cũng sử dụng HTTP request gọi đến dịch vụ Supported Languages.
 
-\section{Giao thức}
+\section{HTTP request}
 
-Phương thức GET được định nghĩa như sau:
+Lệnh GET được định nghĩa như sau:
 
 \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
 GET https://translation.googleapis.com/language/translate/v2/languages?key=YOUR_API_KEY
 \end{lstlisting}
 
-Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được như sau:
+Các tham số:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.15\textwidth}|X|}
+\hline
+\lstinline{target} & \textbf{string}
+
+Ngôn ngữ của kết quả mà ta muốn nhận được (Ví dụ; tiếng Anh). Nếu \lstinline{target} được xác định thì tên của các ngôn ngữ sẽ được trả về trong trường \lstinline{name}. Ngược lại, ta chỉ nhận được mã ISO-639-1 của chúng.\\
+\hline
+\lstinline{model} & \textbf{string}
+
+Mô hình dịch. Nếu có giá trị là \lstinline{base} thì kết quả trả về sẽ là các ngôn ngữ được hỗ trợ bởi mô hình Phrase-Based Machine Translation (PBMT), hoặc \lstinline{nmt} thì kết quả trả về ngôn ngữ được hỗ trợ bởi mô hình Neural Machine Translation (NMT). Nếu bỏ qua tham số này, tất cả các ngôn ngữ được hỗ trợ sẽ được trả về trong kết quả.
+
+Mô hình NMT chỉ hỗ trợ khi ngôn ngữ nguồn hoặc đích là tiếng Anh (en).\\
+\hline
+\lstinline{key} & \textbf{string}
+
+API key. Nếu sử dụng OAuth 2.0 thì không cần tham số này.\\
+\hline
+\end{tabularx}
+\end{center}
+
+Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} thì kết quả nhận được là một chuỗi JSON có dạng như sau:
 
 \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
 {
@@ -37,7 +59,7 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 Để sử dụng dịch vụ SupportedLanguages trong Java, ta thực hiện theo quy trình sau:
 \begin{enumerate}
   \item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
-  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Languages.List}) và sử dụng các phương thức setter để định các tham số cho yêu cầu.
+  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Translations.List}) và sử dụng các setter để định các tham số cho lệnh POST.
   \item Thực thi yêu cầu bằng phương thức \lstinline{execute()}. Kết quả trả về ở dạng JSON, thuộc lớp \lstinline{LanguagesListResponse}.
   \item Dùng phương thức \lstinline{getLanguages()} nhận về một \lstinline{List} các đối tượng thuộc lớp \lstinline{LanguagesResource}.
   \item Dùng các phương thức \lstinline{getLanguage()} để nhận về mã ISO-639-1 và phương thức \lstinline{getName()} để nhận tên của các ngôn ngữ.

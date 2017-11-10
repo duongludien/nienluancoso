@@ -1,6 +1,6 @@
 \documentclass[a4paper,12pt,twoside]{report}
 \usepackage[utf8]{vietnam}
-\usepackage[top=3cm,inner=3.5cm,outer=2cm,bottom=3cm]{geometry}		% Dùng để set margin
+\usepackage[top=3cm,inner=3.5cm,outer=2cm,bottom=3cm,headheight=110pt]{geometry}		% Dùng để set margin
 \usepackage{graphicx}			% Dùng để chèn hình ảnh 
 \graphicspath{ {images/} }		% Folder chứa hình ảnh
 \usepackage{subfiles}			% Dùng để chia thành các files nhỏ
@@ -13,10 +13,12 @@
 	numbers=left,					% Hiển thị số thứ tự dòng				
 	tabsize=4,						% Tab size 
 	frame=leftline,					% Hiển thị 1 gạch bên tay trái source code 
-	xleftmargin=1cm,					% Set margin-left 
+	xleftmargin=1cm,				% Set margin-left 
 	breaklines=true,
 	%postbreak=\mbox{{$\hookrightarrow$}\space},
 }
+
+\usepackage{tabularx}			% Dùng để chèn bảng
 
 \title{Google Cloud Translation API}	% Tiêu đề luận văn
 \author{Dương Lữ Điện}					% Người thực hiện 
@@ -35,22 +37,26 @@
 
 \pagenumbering{roman}	% Kiểu số trang: i, ii, iii, iv, v,...
 \chapter*{NHẬN XÉT CỦA GIẢNG VIÊN}
+% TODO: Cập nhật dòng trống cho GV ghi
+
 \chapter*{LỜI CẢM ƠN}
+% TODO: Cập nhật lời cảm ơn
 \tableofcontents
 \listoffigures
 \listoftables
+% TODO: Cập nhật danh sách bảng
 
-\chapter{GIỚI THIỆU VỀ\\ GOOGLE TRANSLATION API}
+\chapter{GIỚI THIỆU VỀ\\GOOGLE TRANSLATION API}
 \pagenumbering{arabic}			% Kiểu số trang: 1, 2, 3,...
 \subfile{chapters/chapter01}	% Gọi file chương 1, tương tự gọi các chương khác
 
-\chapter{DỊCH VỤ DỊCH VĂN BẢN}
+\chapter{DỊCH VĂN BẢN}
 \subfile{chapters/chapter02}
 
 \chapter{CÁC NGÔN NGỮ\\ĐƯỢC HỖ TRỢ}
 \subfile{chapters/chapter03}
 
-\chapter{DỊCH VỤ NHẬN DIỆN NGÔN NGỮ}
+\chapter{NHẬN DIỆN NGÔN NGỮ}
 \subfile{chapters/chapter04}
 
 \end{document}

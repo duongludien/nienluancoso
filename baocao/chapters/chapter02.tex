@@ -4,51 +4,78 @@
 
 Chương này sẽ mô tả cách sử dụng Cloud Translation API để dịch văn bản thông qua dịch vụ Translate.
 
-\section{Phương thức GET}
-Sau đây là cách sử dụng phương thức GET của HTTP, ta copy URL kèm theo các tham số và dán vào trình duyệt. URL có dạng:
+% \section{Phương thức GET}
+% Sau đây là cách sử dụng phương thức GET của HTTP, ta copy URL kèm theo các tham số và dán vào trình duyệt. URL có dạng:
+% 
+% \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+% https://translation.googleapis.com/language/translate/v2
+% \end{lstlisting}
 
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
-https://translation.googleapis.com/language/translate/v2
-\end{lstlisting}
+% Khi sử dụng phương thức này, URL kèm theo các tham số phải ít hơn 2000 ký tự. 
+% 
+% Ví dụ: dịch một chuỗi ``He is a student'' sang tiếng Séc thì URL sẽ có dạng
+% 
+% \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+% https://translation.googleapis.com/language/translate/v2?q=He is a student&target=cs&key=MY_API_KEY
+% \end{lstlisting}
+% với \lstinline{MY_API_KEY} là API key mà ta đã tạo.
+% 
+% Kết quả nhận được ở dạng JSON như sau:
+% 
+% \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+% {
+%   "data": {
+%     "translations": [
+%       {
+%         "translatedText": "On je student",
+%         "detectedSourceLanguage": "en"
+%       }
+%     ]
+%   }
+% }
+% \end{lstlisting}
 
-Các tham số:
-\begin{enumerate}
-  \item Ngôn ngữ đích (Target Language): sử dụng tham số \lstinline{target} để xác định ngôn ngữ mà ta muốn dịch sang. Giá trị của tham số này là mã ISO-639-1 của ngôn ngữ đích.
-  \item Chuỗi văn bản cần dịch (Source text string): sử dụng tham số \lstinline{q} để xác định nội dung cần dịch.
-  \item API key: sử dụng tham số \lstinline{key} để Google có thể xác minh quyền truy cập của ta đến Translation API.
-\end{enumerate}
+\section{HTTP request}
 
-Khi sử dụng phương thức này, URL kèm theo các tham số phải ít hơn 2000 ký tự. 
-
-Ví dụ: dịch một chuỗi ``He is a student'' sang tiếng Séc thì URL sẽ có dạng
-
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
-https://translation.googleapis.com/language/translate/v2?q=He is a student&target=cs&key=MY_API_KEY
-\end{lstlisting}
-với \lstinline{MY_API_KEY} là API key mà ta đã tạo.
-
-Kết quả nhận được ở dạng JSON như sau:
-
-\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
-{
-  "data": {
-    "translations": [
-      {
-        "translatedText": "On je student",
-        "detectedSourceLanguage": "en"
-      }
-    ]
-  }
-}
-\end{lstlisting}
-
-\section{Phương thức POST}
-
-Phương thức POST được định nghĩa như sau:
+Lệnh POST được định nghĩa như sau:
 
 \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
 POST https://translation.googleapis.com/language/translate/v2?key=YOUR_API_KEY
 \end{lstlisting}
+
+Các tham số:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.15\textwidth}|X|}
+\hline
+\lstinline{q} & \textbf{string}
+
+\textit{Bắt buộc}. Đoạn văn bản cần dịch. Lặp lại tham số này nếu có nhiều đoạn.\\
+\hline
+\lstinline{target} & \textbf{string}
+
+\textit{Bắt buộc}. Mã ISO-639-1 của ngôn ngữ mà ta muốn dịch sang.\\
+\hline
+\lstinline{format} & \textbf{string}
+
+Định dạng của đoạn văn bản cần dịch. Có giá trị là \lstinline{html} nếu là HTML và \lstinline{text} nếu là plain-text.\\
+\hline
+\lstinline{source} & \textbf{string}
+
+Mã ISO-639-1 của \lstinline{q}. Nếu không cung cấp tham số này, API sẽ tự động phát hiện ngôn ngữ.\\
+\hline
+\lstinline{model} & \textbf{string}
+
+Mô hình dịch. Nếu có giá trị là \lstinline{base} thì API sẽ sử dụng mô hình Phrase-Based Machine Translation (PBMT), hoặc \lstinline{nmt} cho mô hình Neural Machine Translation (NMT). Nếu bỏ qua tham số này, mô hình nmt sẽ được sử dụng.
+
+Mô hình NMT chỉ hỗ trợ khi ngôn ngữ nguồn hoặc đích là tiếng Anh (en).\\
+\hline
+\lstinline{key} & \textbf{string}
+
+API key. Nếu sử dụng OAuth 2.0 thì không cần tham số này.\\
+\hline
+\end{tabularx}
+\end{center}
 
 Ta sử dụng nhiều tham số \lstinline{q} để định nghĩa các chuỗi cần dịch và tham số \lstinline{target} để định nghĩa ngôn ngữ đích. Các tham số này đặt trong chuỗi JSON:
 
@@ -84,7 +111,7 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 \begin{enumerate}
   \item Tạo một đối tượng thuộc lớp \lstinline{Translate.Builder}.
   \item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
-  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Translations.List}) và sử dụng các phương thức setter để định các tham số cho phương thức POST.
+  \item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Translations.List}) và sử dụng các setter để định các tham số cho lệnh POST.
   \item Thực thi yêu cầu bằng phương thức \lstinline{execute()}. Kết quả trả về ở dạng JSON, thuộc lớp \lstinline{TranslationsListResponse}.
   \item Dùng phương thức \lstinline{getTranslations()} nhận về một \lstinline{List} các đối tượng thuộc lớp \lstinline{TranslationResource}.
   \item Dùng các phương thức \lstinline{getDetectedSourceLanguage()} và \lstinline{getTranslatedText()} để nhận về các chuỗi đã dịch và ngôn ngữ được phát hiện.

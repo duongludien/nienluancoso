@@ -5,12 +5,49 @@
 Một trong những tính năng ưu việt của Google Translate là phát hiện ngôn ngữ. Tính năng này được bao gồm trong tính năng dịch, tuy nhiên Google cũng phát triển nó thành một dịch vụ riêng gọi là Detecting Language để ta có thể phát hiện ngôn ngữ mà không cần phải dịch.
 
 \section{HTTP request}
-Yêu cầu có dạng như sau:
+Lệnh POST có dạng như sau:
 \begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
 POST https://translation.googleapis.com/language/translate/v2/detect
 \end{lstlisting}
 
 Các tham số:
 
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.15\textwidth}|X|}
+\hline
+\lstinline{q} & \textbf{string}
+
+\textit{Bắt buộc}. Đoạn văn bản cần phát hiện ngôn ngữ. Lặp lại tham số này nếu có nhiều đoạn.\\
+\hline
+\lstinline{key} & \textbf{string}
+
+API key. Nếu sử dụng OAuth 2.0 thì không cần tham số này.\\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{Kết quả trả về}
+Nếu thành công, kết quả trả về ở dạng JSON như sau:
+\begin{lstlisting}[numbers=none, frame=single,xleftmargin=0.15cm,xrightmargin=0.15cm]
+{
+	"data": {
+		object(DetectLanguageResponseList)
+	},
+}
+\end{lstlisting}
+
+Các trường dữ liệu:
+\begin{center}
+\begin{tabularx}{\textwidth}{|p{0.15\textwidth}|X|}
+\hline
+\lstinline{data} & \lstinline{object (ListValue)}
+
+Danh sách các ngôn ngữ được phát hiện. Danh sách này sẽ bao gồm kết quả phát hiện ngôn ngữ cho mỗi giá trị của \lstinline{q} trong HTTP request.\\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{DetectLanguageResponseList}
+Kết quả chứa các danh sách 
 
 \end{document}
