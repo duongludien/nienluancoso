@@ -41,6 +41,17 @@
 
 \usepackage{tabularx}			% Dùng để chèn bảng
 
+% Hiển thị dòng kẻ để viết tay (phần Nhận xét của giảng viên)
+\usepackage{pgffor, ifthen}
+\newcommand{\notes}[3][\empty]{
+	\noindent \vspace{15pt}\\
+	\foreach \n in {1,...,#2}{
+		\ifthenelse{\equal{#1}{\empty}}
+			{\rule{#3}{0.5pt}\vspace{15pt}\\}
+			{\rule{#3}{0.5pt}\vspace{15pt}\\}
+		}
+	}
+
 \title{Google Cloud Translation API}	% Tiêu đề luận văn
 \author{Dương Lữ Điện}					% Người thực hiện 
 
@@ -58,14 +69,12 @@
 
 \pagenumbering{roman}	% Kiểu số trang: i, ii, iii, iv, v,...
 \chapter*{NHẬN XÉT CỦA GIẢNG VIÊN}
-% TODO: Cập nhật dòng trống cho GV ghi
+\subfile{nhan-xet-gv}
 
 \chapter*{LỜI CẢM ƠN}
-% TODO: Cập nhật lời cảm ơn
+\subfile{loi-cam-on}
 \tableofcontents
 \listoffigures
-\listoftables
-% TODO: Cập nhật danh sách bảng
 
 \chapter{GIỚI THIỆU VỀ\\GOOGLE TRANSLATION API}
 \pagenumbering{arabic}			% Kiểu số trang: 1, 2, 3,...

@@ -125,6 +125,29 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 \subsection{Sử dụng một mô hình cụ thể}
 Mặc định, mô hình NMT được ưu tiên sử dụng. Trong trường hợp không sử dụng được mô hình NMT, mô hình PBMT được sử dụng. Ta sẽ thử dịch cùng một đoạn văn bản sử dụng 2 mô hình này và so sánh kết quả.
 
+Sử dụng mô hình NMT, HTTP request có các tham số sau:
+\begin{lstlisting}[style=link]
+{
+	'q': 'Education is the process of facilitating learning, or the acquisition of knowledge, skills, values, beliefs, and habits. Educational methods include storytelling, discussion, teaching, training, and directed research',
+	'target': 'vi',
+	'model': 'nmt'
+}
+\end{lstlisting}
+
+Bản dịch nhận được là: ``Giáo dục là quá trình tạo điều kiện thuận lợi cho học tập, hoặc thu thập kiến thức, kỹ năng, giá trị, niềm tin và thói quen. Các phương pháp giáo dục bao gồm kể chuyện, thảo luận, giảng dạy, đào tạo và nghiên cứu trực tiếp''.
+
+Sử dụng mô hình PBMT, HTTP request có các tham số sau:
+\begin{lstlisting}[style=link]
+{
+	'q': 'Education is the process of facilitating learning, or the acquisition of knowledge, skills, values, beliefs, and habits. Educational methods include storytelling, discussion, teaching, training, and directed research',
+	'target': 'vi',
+	'model': 'base'
+}
+\end{lstlisting}
+
+Bản dịch nhận được là: "Giáo dục là quá trình tạo điều kiện học tập, hoặc tiếp thu kiến thức, kỹ năng, giá trị, niềm tin, và thói quen. phương pháp giáo dục bao gồm kể chuyện, thảo luận, giảng dạy, đào tạo và nghiên cứu đạo".
+
+Có thể thấy rằng mô hình NMT cho kết quả dịch thuật chính xác hơn và mang ý nghĩa dịch thuật cao hơn.
 
 \section{Dịch vụ Translate trong Java}
 Để sử dụng dịch vụ Translate trong Java, ta thực hiện theo quy trình sau:
