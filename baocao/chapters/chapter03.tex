@@ -6,7 +6,7 @@ Như đã đề cập trong phần giới thiệu, Google Translate hỗ trợ t
 
 \section{HTTP request}
 
-Lệnh GET được định nghĩa như sau:
+Lệnh \lstinline{GET} được định nghĩa như sau:
 
 \begin{lstlisting}[style=link]
 GET https://translation.googleapis.com/language/translate/v2/languages?key=YOUR_API_KEY
@@ -23,7 +23,7 @@ Ngôn ngữ của kết quả mà ta muốn nhận được (Ví dụ: en). Nế
 \hline
 \lstinline{model} & \textbf{string}
 
-Mô hình dịch. Nếu có giá trị là \lstinline{base} thì kết quả trả về sẽ là các ngôn ngữ được hỗ trợ bởi mô hình Phrase-Based Machine Translation (PBMT), hoặc \lstinline{nmt} thì kết quả trả về ngôn ngữ được hỗ trợ bởi mô hình Neural Machine Translation (NMT). Nếu bỏ qua tham số này, tất cả các ngôn ngữ được hỗ trợ sẽ được trả về trong kết quả.
+Mô hình dịch. Nếu tham số này có giá trị là \lstinline{base} thì kết quả trả về sẽ là các ngôn ngữ được hỗ trợ bởi mô hình Phrase-Based Machine Translation (PBMT), hoặc \lstinline{nmt} thì kết quả trả về ngôn ngữ được hỗ trợ bởi mô hình Neural Machine Translation (NMT). Nếu bỏ qua tham số này, tất cả các ngôn ngữ được hỗ trợ sẽ được trả về trong kết quả.
 
 Mô hình NMT chỉ hỗ trợ khi ngôn ngữ nguồn hoặc đích là tiếng Anh (en).\\
 \hline
@@ -38,20 +38,20 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 
 \begin{lstlisting}[style=link]
 {
-  "data": {
-    "languages": [
-      {
-        "language": "en"
-      },
-      {
-        "language": "fr"
-      },
-      ...
-      {
-        "language": "zh-CN"
-      }
-    ]
-  }
+	"data": {
+		"languages": [
+			{
+				"language": "en"
+			},
+			{
+				"language": "fr"
+			},
+			...
+			{
+				"language": "zh-CN"
+			}
+		]
+	}
 }
 \end{lstlisting}
 
@@ -68,8 +68,9 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 \section*{Tham khảo}
 
 \begin{enumerate}
-  \item Documentation - Discovering Supported Languages: https://goo.gl/tQgYgy
-  \item Google Cloud Translation API Java Docs: https://goo.gl/bnU3ES
+  \item Documentation - Discovering Supported Languages: https://goo.gl/2N7Dum
+  \item REST Reference - languages: https://goo.gl/EipHGM
+  \item Google Cloud Translation API v2 Java Docs: https://goo.gl/bnU3ES
 \end{enumerate}
 
 \end{document}
