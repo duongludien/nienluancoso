@@ -1,4 +1,4 @@
-package com.duongludien.www.translation;
+package com.duongludien.translation;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

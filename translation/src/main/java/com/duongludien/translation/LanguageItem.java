@@ -1,4 +1,4 @@
-package com.duongludien.www.translation;
+package com.duongludien.translation;
 
 public class LanguageItem {
 	private String code;

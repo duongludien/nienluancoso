@@ -1,4 +1,4 @@
-package com.duongludien.www.translation;
+package com.duongludien.translation;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
