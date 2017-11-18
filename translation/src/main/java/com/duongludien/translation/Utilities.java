@@ -30,10 +30,11 @@ public class Utilities {
 		try {
 			HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 			JsonFactory jsonFactory = Utils.getDefaultJsonFactory();
-			TranslateRequestInitializer translateRequestInitializer = new TranslateRequestInitializer("AIzaSyA8gG0zwQ00opVgu6bKx5iaLcTt3zDCUmw");
+			String apiKey = "AIzaSyA8gG0zwQ00opVgu6bKx5iaLcTt3zDCUmw";
+			TranslateRequestInitializer translateRequestInitializer = new TranslateRequestInitializer(apiKey);
 			
 			Translate.Builder builder = new Translate.Builder(httpTransport, jsonFactory, null);
-			builder.setApplicationName("Translator");			
+			builder.setApplicationName("Translator");
 			builder.setTranslateRequestInitializer(translateRequestInitializer);
 			
 			Translate translateService = builder.build();
