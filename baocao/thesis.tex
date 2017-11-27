@@ -12,6 +12,8 @@
 \usepackage{listings}			% Dùng để chèn source code vào luận văn
 \usepackage{emptypage}			% Không đánh số trang, header, footer với các trang trắng
 
+\usepackage{textcomp}		% Dùng để sử dụng upquote trong lstlisting
+
 % Định dạng mặc định
 \lstset {
 	basicstyle=\small\ttfamily, 	% Font family và font size 
@@ -20,6 +22,7 @@
 	frame=leftline,					% Hiển thị 1 gạch bên tay trái source code 
 	xleftmargin=1cm,				% Set margin-left 
 	breaklines=true,
+	upquote=true,					% straight single quote
 }
 
 % Tạo một style tên là code để định dạng source code

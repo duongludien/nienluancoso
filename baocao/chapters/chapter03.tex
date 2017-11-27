@@ -120,7 +120,7 @@ GET https://translation.googleapis.com/language/translate/v2/languages?key=YOUR_
 \end{lstlisting}
 \begin{lstlisting}[style=link]
 {
-	"target": "zh-TW"
+	"target": "en"
 }
 \end{lstlisting}
 
@@ -165,14 +165,14 @@ Nếu thành công, HTTP trả về mã trạng thái là \lstinline{200 OK} th�
 \end{lstlisting}
 
 \section{Dịch vụ Supported Languages trong Java}
-Để sử dụng dịch vụ SupportedLanguages trong Java, ta thực hiện theo quy trình sau:
+Để sử dụng dịch vụ Supported Languages trong Java, ta thực hiện theo quy trình sau:
 \begin{enumerate}
 	\item Tạo một đối tượng thuộc lớp \lstinline{Translate.Builder}.
   	\item Sử dụng phương thức \lstinline{build()} của đối tượng \lstinline{Builder} vừa tạo để khởi tạo một dịch vụ \lstinline{Translate}.
   	\item Tạo một yêu cầu (đối tượng thuộc lớp \lstinline{Languages.List}) và sử dụng các setter để định các tham số cho lệnh \lstinline{GET}.
   	\item Thực thi yêu cầu bằng phương thức \lstinline{execute()}. Kết quả trả về ở dạng JSON, thuộc lớp \lstinline{LanguagesListResponse}.
   	\item Dùng phương thức \lstinline{getLanguages()} nhận về một \lstinline{List} các đối tượng thuộc lớp \lstinline{LanguagesResource}.
-  	\item Dùng các phương thức \lstinline{getLanguage()} để nhận về mã ISO-639-1 và phương thức \lstinline{getName()} để nhận tên của các ngôn ngữ.
+  	\item Dùng các phương thức \lstinline{getLanguage()} để nhận về mã ISO-639-1 và phương thức \lstinline{getName()} để nhận tên của các ngôn ngữ (nếu có).
 \end{enumerate}
 
 % \section*{Tham khảo}
